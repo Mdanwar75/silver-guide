@@ -1,0 +1,51 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run a one-line script
+      run: echo Hello, world!
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build,
+        echo test, and deploy your project.
+# Create a new check run with the status queued
+def create_check_run
+  # # At the time of writing, Octokit does not support the Checks API yet, but
+  # it does provide generic HTTP methods you can use:
+  # https://developer.github.com/v3/checks/runs/#create-a-check-run
+  check_run = @installation_client.post(
+    "repos/#{@payload['repository']['full_name']}/check-runs",
+    {
+      # This header allows for beta access to Checks API
+      accept: 'application/vnd.github.antiope-preview+json',
+      # The name of your check run.
+      name: 'Octo RuboCop',
+      # The payload structure differs depending on whether a check run or a check suite event occurred.
+      head_sha: @payload['check_run'].nil? ? @payload['check_suite']['head_sha'] : @payload['check_run']['head_sha']
+    }
+  )
+end
+# Create a new check run with the status queued
+def create_check_run
+  # # At the time of writing, Octokit does not support the Checks API yet, but
+  # it does provide generic HTTP methods you can use:
+  # https://developer.github.com/v3/checks/runs/#create-a-check-run
+  check_run = @installation_client.post(
+    "repos/#{@payload['repository']['full_name']}/check-runs",
+    {
+      # This header allows for beta access to Checks API
+      accept: 'application/vnd.github.antiope-preview+json',
+      # The name of your check run.
+      name: 'Octo RuboCop',
+      # The payload structure differs depending on whether a check run or a check suite event occurred.
+      head_sha: @payload['check_run'].nil? ? @payload['check_suite']['head_sha'] : @payload['check_run']['head_sha']
+    }
+  )
+end
